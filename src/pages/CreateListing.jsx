@@ -42,7 +42,6 @@ export const CreateListing = () => {
     } else {
       setImagemUploadError("You can only upload 6 images per listing");
       setUploading(false);
-
     }
   };
 
@@ -57,7 +56,7 @@ export const CreateListing = () => {
         (snapshot) => {
           const progress =
             (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          setUploadProgress(Math.round(progress));
+          console.log(`Upload is ${progress}% done`);
         },
         (error) => {
           reject(error);
@@ -75,7 +74,7 @@ export const CreateListing = () => {
     setFormData({
       ...formData,
       imageUrls: formData.imageUrls.filter((_, i) => i !== index),
-    })
+    });
   };
 
   return (
@@ -208,7 +207,7 @@ export const CreateListing = () => {
               onClick={handleImageSubmit}
               className="p-3 text-green-700 border border-green-700 rounded uppercase hover:shadow-lg  disabled:opacity-80"
             >
-              { uploading ? "Uploading..." : "Upload" }
+              {uploading ? "Uploading..." : "Upload"}
             </button>
           </div>
           <p className="text-red-700 text-sm">
@@ -216,7 +215,10 @@ export const CreateListing = () => {
           </p>
           {formData.imageUrls.length > 0 &&
             formData.imageUrls.map((image, index) => (
-              <div key={index} className="flex justify-between p-3 border items-center">
+              <div
+                key={index}
+                className="flex justify-between p-3 border items-center"
+              >
                 <img
                   src={image}
                   alt="listing image"
@@ -225,7 +227,7 @@ export const CreateListing = () => {
                 />
                 <button
                   type="button"
-                  onClick={ () => handleRemoveImage(index)}
+                  onClick={() => handleRemoveImage(index)}
                   className="p-3 text-red-700 border border-red-700 rounded-lg uppercase hover:opacity-75"
                 >
                   Delete
